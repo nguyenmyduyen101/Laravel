@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,13 +15,75 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $html='<h1>Học lập trình tại Unicode</h1>';
+    return $html;
 });
 
-Route::get('/unicode', function () {
-    return view('home');
-});
+// Route::get('unicode', function () {
+//     return 'Phương thức Get của path /unicode';
+// });
 
-Route::get('/san-pham', function () {
-    return view('product');
+// Route::get('unicode', function () {
+//     return view('form');
+// });
+
+// Route::post('unicode', function () {
+//     return 'Phương thức Post của path /unicode';
+// });
+
+// Route::put('unicode', function () {
+//     return 'Phương thức Put của path /unicode';
+// });
+
+// Route::delete('unicode', function () {
+//     return 'Phương thức Delete của path /unicode';
+// });
+
+// Route::patch('unicode', function () {
+//     return 'Phương thức Patch của path /unicode';
+// });
+
+// Route::match(['get','post'],'unicode', function () {
+//     return $_SERVER['REQUEST_METHOD'];
+// });
+
+// Route::any('unicode', function (Request $request) {
+//     return $request->method();
+// });
+
+// Route::get('show-form', function () {
+//     return view('form');
+// });
+
+// Route::redirect('unicode','show-form',404);
+
+// Route::view('show-form','form');
+
+Route::prefix('admin')->group(function(){
+
+    Route::get('unicode', function () {
+        return 'Phương thức Get của path /unicode';
+    });
+    
+    Route::get('show-form', function () {
+        return view('form');
+    });
+    
+    Route::prefix('products')->group(function(){
+        Route::get('/',function(){
+            return 'Danh sách sản phẩm';
+        });
+
+        Route::get('/add',function(){
+            return 'Thêm sản phẩm';
+        });
+
+        Route::get('/edit',function(){
+            return 'Sửa sản phẩm';
+        });
+
+        Route::get('/delete',function(){
+            return 'Xóa sản phẩm';
+        });
+    });
 });
