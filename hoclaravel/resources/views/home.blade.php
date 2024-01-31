@@ -1,8 +1,2 @@
 <h1 style="text-align:center;">Học lập trình tại Unicode</h1>
-<?php
-if (env('APP_ENV')=='production'){
-    echo 'Call api live';
-}else{
-    echo 'Call api sandbox';
-}
-?>
+<a href="<? echo route('admin.tintuc',['id'=>1,'slug'=>'tin-tuc-the-gioi']); ?>">Xem tin tức</a>
