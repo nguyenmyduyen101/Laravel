@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\Admin\ProductsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,87 +16,30 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', function () {
-    $html='<h1>Học lập trình tại Unicode</h1>';
-    return $html;
-});
+//Client route
+Route::prefix('categories')->group(function(){
 
-// Route::get('unicode', function () {
-//     return 'Phương thức Get của path /unicode';
-// });
+    //Danh sach chuyen muc
+    Route::get('/',[CategoriesController::class,'index'])->name('categories.list');
 
-// Route::get('unicode', function () {
-//     return view('form');
-// });
+    //Lay chi tiet 1 chuyen muc(Ap dung show form sua chuyen muc)
+    Route::get('/edit{id}',[CategoriesController::class,'getCategory'])->name('categories.edit');
 
-// Route::post('unicode', function () {
-//     return 'Phương thức Post của path /unicode';
-// });
+    //Xu li Update chuyen muc
+    Route::post('/edit{id}',[CategoriesController::class,'updateCategory']);
 
-// Route::put('unicode', function () {
-//     return 'Phương thức Put của path /unicode';
-// });
-
-// Route::delete('unicode', function () {
-//     return 'Phương thức Delete của path /unicode';
-// });
-
-// Route::patch('unicode', function () {
-//     return 'Phương thức Patch của path /unicode';
-// });
-
-// Route::match(['get','post'],'unicode', function () {
-//     return $_SERVER['REQUEST_METHOD'];
-// });
-
-// Route::any('unicode', function (Request $request) {
-//     return $request->method();
-// });
-
-// Route::get('show-form', function () {
-//     return view('form');
-// });
-
-// Route::redirect('unicode','show-form',404);
-
-// Route::view('show-form','form');
-
-Route::get('/','App\Http\Controllers\HomeController@index')->name('home');
-
-Route::get('/tin-tuc','HomeController@getNews')->name('news');
-
-Route::get('/chuyen-muc/{id}',[HomeController::class,'getcategories']);
-
-
-
-Route::prefix('admin')->group(function(){
-
-    Route::get('tin-tuc/{id?}/{slug?}.html', function ($id=null,$slug=null) {
-        $content= 'Phương thức Get của path /unicode với tham số: ';
-        $content .='id = '.$id. '<br>';
-        $content.='slug = '.$slug ;
-        return $content;
-    })->where('id','\d+')->where('slug','.+')->name('admin.tintuc');
-     
-    Route::get('show-form', function () {
-        return view('form');
-    })->name('admin.show-form');
+    //Hien thi form add du lieu
+    Route::get('/add',[CategoriesController::class,'addCategory'])->name('categories.add');
     
-    Route::prefix('products')->middleware('checkpermission')->group(function(){
-        Route::get('/',function(){
-            return 'Danh sách sản phẩm';
-        });
 
-        Route::get('/add',function(){
-            return 'Thêm sản phẩm';
-        })->name('admin.products.add');
+    //Xu li them chuyen muc
+    Route::post('/add',[CategoriesController::class,'handleAddCategory']);
 
-        Route::get('/edit',function(){
-            return 'Sửa sản phẩm';
-        });
-
-        Route::get('/delete',function(){
-            return 'Xóa sản phẩm';
-        });
-    });
+    //Xoa chuyen muc
+    Route::delete('/delete{id}',[CategoriesController::class,'deleteCategory'])->name('categories.delete');
+    
+});
+//Admin route
+Route::prefix('admin')->group(function(){
+        Route::resource('products',ProductsController::class);
 });
