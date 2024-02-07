@@ -17,13 +17,18 @@ class CheckLoginAdmin
     {
         //echo 'Middleware request';
 
-        if($this->isLogin()){
-            return redirect('home');
-        }
+        // if($this->isLogin()){
+        //     return redirect('home');
+        // }
+        // if($request->is('admin/*')){
+        //     echo '<h3>khu vực quản trị</h3>';
+        // }
+        
+        
         return $next($request);
     }
 
     public function isLogin(){
-        return false;
+        return true;
     }
 }
