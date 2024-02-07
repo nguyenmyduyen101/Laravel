@@ -21,30 +21,30 @@ use App\Http\Controllers\HomeController;
 
 //Client route
 
-Route::get('/',[HomeController::class,'index'])->name('home');
+Route::get('/',[HomeController::class,'index'])->name('home')->middleware('auth.admin');
 
-// Route::prefix('categories')->group(function(){
+Route::middleware('auth.admin')->prefix('categories')->group(function(){
 
-//     //Danh sach chuyen muc
-//     Route::get('/',[CategoriesController::class,'index'])->name('categories.list');
+    //Danh sach chuyen muc
+    Route::get('/',[CategoriesController::class,'index'])->name('categories.list');
 
-//     //Lay chi tiet 1 chuyen muc(Ap dung show form sua chuyen muc)
-//     Route::get('/edit{id}',[CategoriesController::class,'getCategory'])->name('categories.edit');
+    //Lay chi tiet 1 chuyen muc(Ap dung show form sua chuyen muc)
+    Route::get('/edit{id}',[CategoriesController::class,'getCategory'])->name('categories.edit');
 
-//     //Xu li Update chuyen muc
-//     Route::post('/edit{id}',[CategoriesController::class,'updateCategory']);
+    //Xu li Update chuyen muc
+    Route::post('/edit{id}',[CategoriesController::class,'updateCategory']);
 
-//     //Hien thi form add du lieu
-//     Route::get('/add',[CategoriesController::class,'addCategory'])->name('categories.add');
+    //Hien thi form add du lieu
+    Route::get('/add',[CategoriesController::class,'addCategory'])->name('categories.add');
     
 
-//     //Xu li them chuyen muc
-//     Route::post('/add',[CategoriesController::class,'handleAddCategory']);
+    //Xu li them chuyen muc
+    Route::post('/add',[CategoriesController::class,'handleAddCategory']);
 
-//     //Xoa chuyen muc
-//     Route::delete('/delete{id}',[CategoriesController::class,'deleteCategory'])->name('categories.delete');
+    //Xoa chuyen muc
+    Route::delete('/delete{id}',[CategoriesController::class,'deleteCategory'])->name('categories.delete');
     
-// });
+});
 
 Route::get('san-pham/{id}',[HomeController::class, 'getProductDetail']);
 
