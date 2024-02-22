@@ -19,7 +19,10 @@ class HomeController extends Controller
 
         $this->data['dataArr'] = [];
 
-        $this->data['number'] = 9;
+        $this->data['number'] = 3;
+
+        $this->data['message'] = 'Đặt hàng thành công';
+
 
         return view('home',$this->data);
     }
