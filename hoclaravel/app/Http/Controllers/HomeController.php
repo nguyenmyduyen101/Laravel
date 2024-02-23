@@ -3,27 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
 
 class HomeController extends Controller
 {
     public $data = [];
     public function index(){
-        $this->data['Welcome'] = 'Học lập trình Laravel tại <b>Unicode</b>';
-        $this->data['content'] = '<h3>Chương 1: Nhập môn Laravel</h3>
-        <p>Kiến thức 1</p>
-        <p>Kiến thức 2</p>
-        <p>Kiến thức 3</p>';
+       $this->data['title']='Đào tạo lập trình web';
+        return view('clients.home',$this->data);
+    }
 
-        $this->data['index'] =1;
+    public function products(){
+       $this->data['title']='Sản phẩm';
+       return view('clients.products',$this->data);
 
-        $this->data['dataArr'] = [];
-
-        $this->data['number'] = 3;
-
-        $this->data['message'] = 'Đặt hàng thành công';
-
-
-        return view('home',$this->data);
     }
 }
