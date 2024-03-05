@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\HomeController;
+use Illuminate\Http\Response;
+
 
 
 /*
@@ -26,5 +28,21 @@ Route::get('/them-san-pham',[HomeController::class,'getAdd']);
 
 Route::put('/them-san-pham',[HomeController::class,'putAdd']);
 
+Route::get('lay-thong-tin',[HomeController::class,'getArr']);
+
+
+Route::get('demo-response',function (){
+    //return view('clients.demo-test');
+
+    $response = response()
+    ->view('clients.demo-test',[
+        'title'=>'Học HTTP Response'
+    ],201)
+    ->header('Content-Type','application/json')
+    ->header('API-Key','123456');
+
+    return $response;
+   
+});
 
 
