@@ -32,17 +32,17 @@ Route::get('lay-thong-tin',[HomeController::class,'getArr']);
 
 
 Route::get('demo-response',function (){
-    //return view('clients.demo-test');
+  return view('clients.demo-test');
+})->name('demo-response');
 
-    $response = response()
-    ->view('clients.demo-test',[
-        'title'=>'Học HTTP Response'
-    ],201)
-    ->header('Content-Type','application/json')
-    ->header('API-Key','123456');
+Route::post('demo-response',function (Request $request){
+    if (!empty($request->username)){
+        return back()->withInput()->with('mess','Validate thành công');
 
-    return $response;
-   
+    
+    }
+    return redirect(route ('demo-response'))->with('mess','Validate không thành công');
+
 });
 
 
