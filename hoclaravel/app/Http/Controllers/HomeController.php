@@ -47,4 +47,42 @@ class HomeController extends Controller
     
         return $contentArr;
     }
+
+    public function downloadImage(Request $request){
+        if (!empty($request->image)){
+            $image = trim($request->image);
+
+            $fileName = 'image_'.uniqid().'.jpg';
+
+            //$fileName = basename($image);
+
+            // return response()->streamDownload(function() use($image){
+            //     $imageContent = file_get_contents($image);
+            //     echo $imageContent;
+            // },$fileName);
+            
+            return response()->download($image,$fileName);
+        }
+    }
+
+    public function downloadDoc(Request $request){
+        if (!empty($request->file)){
+            $file = trim($request->file);
+
+            $fileName = 'tai-lieu_'.uniqid().'.pdf';
+
+            //$fileName = basename($image);
+
+            // return response()->streamDownload(function() use($image){
+            //     $imageContent = file_get_contents($image);
+            //     echo $imageContent;
+            // },$fileName);
+
+            $headers = [
+                'content-Type'=>'application/pdf'
+            ];
+            
+            return response()->download($file,$fileName);
+        }
+    }
 }
