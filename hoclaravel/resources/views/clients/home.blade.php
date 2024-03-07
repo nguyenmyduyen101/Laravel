@@ -30,11 +30,22 @@
    {{-- <x-inputs.button />
 
    <x-forms.button /> --}}
+   <p><img src="https://d1hjkbq40fs2x4.cloudfront.net/2017-08-21/files/landscape-photography_1645.jpg" alt=""></p>
+
+   <p><a href="{{route ( 'download-image','?image='. public_path ('storange/Hinh-nen-Totoro-de-thuong.jpg')}}" class="btn btn-primary"> Download ảnh</a></p>
+
+   <p><a href="{{route('download-doc').'?file='.public_path('storage/demo-pdf.pdf')}}" class="btn btn-primary">Dowload tài liệu</a></p>
 
 
 @endsection
 
 @section('css')
+<style>
+img{
+   max-width: 100%;
+   height:auto;
+}
+</style>
    
 @endsection
 
