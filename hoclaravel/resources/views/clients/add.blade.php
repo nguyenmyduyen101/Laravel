@@ -6,12 +6,9 @@
 @section('content')
    <h1>Thêm sản phẩm</h1>
    <form action ="" method="POST">
-      @if ($errors->any())
-         <div class="alert alert-danger text-center">
-            {{$errorMessage}}
-
-         </div>
-      @endif
+      @error('msg')
+         <div class="alert alert-danger text-center">{{$message}}</div>
+      @enderror
 
       <div class="mb-3">
          <label for="">Tên sản phẩm</label>
