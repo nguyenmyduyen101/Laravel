@@ -31,6 +31,7 @@ class HomeController extends Controller
     }
 
     public function postAdd(ProductRequest $request){
+        dd($request->all());
 
         // $rules = [
         //     'product_name'=>'required|min:6',
