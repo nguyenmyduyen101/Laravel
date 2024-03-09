@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\ProductRequest;
+use Illuminate\Support\Facades\Validator;
+
+
 
 class HomeController extends Controller
 {
@@ -30,27 +33,45 @@ class HomeController extends Controller
         return view('clients.add',$this->data);
     }
 
-    public function postAdd(ProductRequest $request){
-        dd($request->all());
+    public function postAdd(Request $request){
 
-        // $rules = [
-        //     'product_name'=>'required|min:6',
-        //     'product_price'=>'required|integer'
-        // ];
+        $rules = [
+            'product_name'=>'required|min:6',
+            'product_price'=>'required|integer'
+        ];
 
         // $messages = [
-        //     'product_name.required'=>'Trường :attribute bắt buộc phải nhập',
+        //     'product_name.required'=>'Tên sản phẩm bắt buộc phải nhập',
         //     'product_name.min'=>'Tên sản phẩm không được nhỏ hơn :min ký tự',
         //     'product_price.required'=>'Giá sản phẩm bắt buộc phải nhập',
         //     'product_price.integer'=>'Giá sản phẩm phải là số'
 
         // ];
 
-        // $messages =[
-        //     'required'=>'Trường :attribute bắt buộc phải nhập',
-        //     'min'=>'Trường :attribute không được nhỏ hơn :min ký tự',
-        //     'integer'=>'Trường :attribute phải là số'
-        // ];
+         $messages =[
+            'required'=>'Trường :attribute bắt buộc phải nhập',
+            'min'=>'Trường :attribute không được nhỏ hơn :min ký tự',
+            'integer'=>'Trường :attribute phải là số'
+        ];
+
+        $attributes = [
+            'product_name'=>'Tên sản phẩm',
+            'product_price'=>'Giá sản phẩm'
+        ];
+
+        $validator= Validator::make($request->all(), $rules, $messages, $attributes);
+
+        //$validator->validate();
+        if ($validator->fails()){
+            $validator->errors()->add('msg','Vui lòng kiểm tra lại dữ liệu');
+            //return 'validate thất bại';
+        }else{
+           // return 'Validate thành công';
+           return redirect()->route('product')->with('msg','Validate thành công');
+        }
+
+        return back()->withErrors($validator);
+       
 
         //$request->validate($rules,$messages);
             
