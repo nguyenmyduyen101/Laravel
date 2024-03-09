@@ -9,14 +9,16 @@
 @endsection --}}
 
 @section('content')
-<h1>SẢN PHẨM</h1>
-<x-package-alert ></x-package-alert>
-@push('scripts')
-<script>
-    console.log('Push lần 2');
-</script>
+    @if (session('msg'))
+    <div class="alert alert-success">{{session('msg')}}</div>
+    @endif
+    <h1>SẢN PHẨM</h1>
+    @push('scripts')
+        <script>
+            console.log('Push lần 2');
+        </script>
 
-@endpush
+    @endpush
 @endsection
 
 @section('css')
