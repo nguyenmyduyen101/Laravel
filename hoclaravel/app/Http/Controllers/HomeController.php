@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\ProductRequest;
+
 use Illuminate\Support\Facades\Validator;
 
-use App\Rules\Uppercase;
 
+use App\Rules\Uppercase;
+//use Illuminate\Support\Facades\DB;
+use DB;
 
 
 class HomeController extends Controller
@@ -18,6 +21,12 @@ class HomeController extends Controller
        $this->data['title']='Đào tạo lập trình web';
 
        $this->data['message']='Đăng kí tài khoản thành công';
+
+    //    $users = DB::select('SELECT * FROM users WHERE email=:email',[
+    //     'email'=>'myduyen@gmail.com'
+    //    ]);
+
+    //    dd($users);
 
         return view('clients.home',$this->data);
     }
