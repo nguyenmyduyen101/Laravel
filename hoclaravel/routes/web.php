@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Response;
 
+use App\Http\Controllers\UsersController;
+
 
 
 /*
@@ -52,3 +54,7 @@ Route::get('download-doc',[HomeController::class,'downloadDoc'])->name('download
 
 
 
+//Người dùng
+Route::prefix('users')->group(function(){
+  Route::get('/',[UsersController::class,'index']);
+});
