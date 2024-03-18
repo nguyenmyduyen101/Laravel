@@ -17,6 +17,11 @@ class UsersController extends Controller
     }
 
     public function index(){
+
+        $statement = $this->users->statementUser("DELETE FROM users");
+
+        dd($statement);
+        
         $title = 'Danh sách người dùng';
 
         $usersList = $this->users->getAllUsers();
@@ -98,5 +103,27 @@ class UsersController extends Controller
         $this->users->updateUser($dataUpdate,$id);
 
         return back()->with('msg','Cập nhật người dùng');
+    }
+
+    public function delete($id=0){
+
+        if (!empty($id)){
+            $userDetail = $this->users->getDetail($id);
+            if (!empty($userDetail[0])){
+                $deleteStatus = $this->users->deleteUser($id);
+                if ($deleteStatus){
+                    $msg = 'Xóa người dùng thành công';
+                }else{
+                    $msg = 'Bạn không thể xóa người dùng này. Vui lòng thử lại sau';
+                }
+            }else{
+                $msg = 'Người dùng không tổn tại';
+            }
+
+        }else{
+            $msg = 'Liên kết không tổn tại';            
+        }
+        return redirect()->route('users.index')->with('msg',$msg);
+
     }
 }
