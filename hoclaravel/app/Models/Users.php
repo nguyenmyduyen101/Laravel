@@ -33,4 +33,12 @@ class Users extends Model
 
         return DB::update('UPDATE'.$this->table.'SET fullname=?, email=?, update_at=? where id = ?', $data);
     }
+
+    public function deleteUser($id){
+        return DB::delete("DELETE FROM $this->table WHERE id=?",[$id]);
+    }
+
+    public function statementUser($sql){
+        return DB::statement($sql);
+    }
 }
