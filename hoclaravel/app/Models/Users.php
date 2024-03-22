@@ -12,8 +12,31 @@ class Users extends Model
     use HasFactory;
     protected $table = 'users';
 
-    public function getAllUsers(){
-        $users = DB::select('SELECT*FROM users ORDER BY create_at DESC');
+    public function getAllUsers($filters = [], $keywords = null){
+       // $users = DB::select('SELECT*FROM users ORDER BY create_at DESC');
+
+       //DB::enableQueryLog();
+       $users = DB::table($this->table)
+       ->select('users.*','groups.name as group_name')
+       ->join('groups','users.group_id','=','groups.id')
+       ->orderBy('users.create_at','DESC');
+
+       if (!empty($tilters)){
+        $users = $users->where($tilters);
+       }
+
+       if (!empty($keywords)){
+        $users = $users->where(function($query) use ($keywords){
+            $query->orWhere('fullname', 'like', '%'.$keywords.'%');
+            $query->orWhere('email', 'like', '%'.$keywords.'%');
+
+        });
+       }
+
+       $users = $users->get();
+
+       //$sql = DB::getQueryLog();
+        //dd($sql);
 
         return $users;
     }
