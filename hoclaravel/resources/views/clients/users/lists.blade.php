@@ -88,4 +88,8 @@
 
         </tbody>
     </table>
+
+    <div class="d-flex jjustify-content-end">
+        {{$usersList->links()}}
+    </div>
 @endsection
