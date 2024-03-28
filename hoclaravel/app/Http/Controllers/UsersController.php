@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 
 // use Illuminate\Support\Facades\DB;
 
@@ -87,27 +88,7 @@ class UsersController extends Controller
         return view('clients.users.add',compact('title','allGroups'));
     }
 
-    public function postAdd (Request $request){
-        $request->validate([
-            'fullname'=>'required|min:5',
-            'email'=>'required|email|unique:users',
-            'group_id' => ['required','integer',function($attribute, $value, $fail){
-                if ($value==0){
-                    $fail('Bắt buộc phải chọn nhóm');
-                }
-            }],
-            'status' =>'required|integer'
-        ],[
-            'fullname.required'=>'Họ và tên bắt buộc phải nhập',
-            'fullname.min' =>'Họ và tên phải từ :min ký tự trở nên',
-            'email.required' =>'Email bắt buộc phải nhập',
-            'email.email' =>'Email không đúng định dạng',
-            'email.unique' =>'Email đã tồn tại trên hệ thống',
-            'group_id.required' => 'Nhóm không được để trống',
-            'group_id.integer' => 'Nhóm không hợp lệ',
-            'status.required' => 'Trạng thái không được để trống',
-            'status.integer' => 'Trạng thái không hợp lệ'
-        ]);
+    public function postAdd (UserRequest $request){
 
         $dataInsert = [
             'fullname' =>$request->fullname,
@@ -139,35 +120,29 @@ class UsersController extends Controller
             
         }
 
-        return view('clients.users.edit',compact('title','userDetail'));
+        $allGroups = getAllGroups();
+
+        return view('clients.users.edit',compact('title','userDetail','allGroups'));
 
     }
 
-    public function postEdit(Request $request){
+    public function postEdit(UserRequest $request){
         $id = session('id');
         if (!empty($id)){
             return back()->with('msg','Liên kết không tồn tại');
         }
-        $request->validate([
-            'fullname'=>'required|min:5',
-            'email'=>'required|email|unique:users,email,'.$id
-        ],[
-            'fullname.required'=>'Họ và tên bắt buộc phải nhập',
-            'fullname.min' =>'Họ và tên phải từ :min ký tự trở nên',
-            'email.required' =>'Email bắt buộc phải nhập',
-            'email.email' =>'Email không đúng định dạng',
-            'email.unique' =>'Email đã tồn tại trên hệ thống'
-        ]);
 
         $dataUpdate = [
-            $request->fullname,
-            $request->email,
-            date('Y-m-d H:i:s')
+            'fullname' =>$request->fullname,
+            'email' =>$request->email,
+            'group_id' =>$request->group_id,
+            'status' =>$request->status,
+            'update_at' => date('Y-,-d H:i:s')
         ];
 
         $this->users->updateUser($dataUpdate,$id);
 
-        return back()->with('msg','Cập nhật người dùng');
+        return back()->with('msg','Cập nhật người dùng thành công');
     }
 
     public function delete($id=0){
