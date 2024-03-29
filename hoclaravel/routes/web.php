@@ -6,6 +6,8 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Http\Response;
 
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\PostController;
+
 
 
 
@@ -68,7 +70,8 @@ Route::prefix('users')->name('users.')->group(function(){
 
   Route::post('/delete/{id}',[UsersController::class,'delete'])->name('delete');
 
+});
 
-
-
+Route::prefix('posts')->name('posts.')->group(function (){
+  Route::get('/',[PostController::class,'index'])->name('index');
 });
